@@ -1,0 +1,22 @@
+// Zen Grid Defaults
+$legacy-support-for-ie6: false;
+$legacy-support-for-ie7: true;
+$legacy-support-for-ie8: true;
+$box-sizing-polyfill-path: "../../images/boxsizing.htc";
+$zen-column-count: 1;
+$zen-grid-width: 100%;
+$zen-gutter-width: 1em;
+
+
+// Breakpoint Defaults - font-size: 100%;
+$g-mobile : max-width 30em; // 0px - 480px
+$g-tablet : 30em;           // 480px
+$g-normal : 60em;           // 960px
+$g-wide   : 90em;           // 1440px
+
+
+// Breakpoint Defaults - font-size: 175%;
+$mobile : max-width 17.1428571428574em; // 0px - 480px
+$tablet : 17.1428571428574em;           // 480px
+$normal : 34.28571428571429em;          // 960px
+$wide   : 51.42857142857143em;          // 1440px

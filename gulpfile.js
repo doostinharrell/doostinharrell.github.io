@@ -1,78 +1,99 @@
-var gulp        = require('gulp');
-var browserSync = require('browser-sync');
-var sass        = require('gulp-sass');
-var prefix      = require('gulp-autoprefixer');
-var cp          = require('child_process');
+// Require Node Modules
+var gulp          = require('gulp'),
+    browsersync   = require('browser-sync'),
+    filter        = require('gulp-filter'),
+    uglify        = require('gulp-uglify'),
+    concat        = require('gulp-concat'),
+    flatten       = require('gulp-flatten'),
+    ext           = require('gulp-ext-replace'),
+    nodesass      = require('node-sass'),
+    sass          = require('gulp-sass'),
+    globbing      = require('gulp-css-globbing'),
+    autoprefixer  = require('gulp-autoprefixer'),
+    minifycss     = require('gulp-minify-css'),
+    sourcemaps    = require('gulp-sourcemaps'),
+    bowerfiles    = require('main-bower-files'),
+    browsersync   = require('browser-sync'),
+    reload        = browsersync.reload;
 
-var messages = {
-    jekyllBuild: '<span style="color: grey">Running:</span> $ jekyll build'
-};
-
-// Bower Build Task
+// Bower Task
 gulp.task('bower-build', function() {
   
   gulp.src(bowerfiles({ // Get main js files
     includeDev:'true',
     overrides: {
-      jquery: {
-        ignore: true // Ignore bower jQuery in favore of Drupal
-      },
+//      jquery: {
+//        main: true // Ignore bower jQuery in favore of Drupal
+//      },
       "modernizr-min": {
         main: "*.js" // Manual main file definition for modernizr
       }
     }
-  }),{base:'libraries'})
+  }),{base:'bower_components'})
 
     .pipe(filter('**/*.js'))
+    .pipe(flatten())
     .pipe(gulp.dest('dev/js/bower'))
 
   gulp.src(bowerfiles({includeDev:'true'}),{base:'bower_components'})// get main css files
     .pipe(filter('**/*.css'))
     .pipe(ext('.scss'))
+    .pipe(flatten())
     .pipe(gulp.dest('dev/sass/bower'))
 })
 
-// Build the Jekyll Site
-gulp.task('jekyll-build', function (done) {
-    browserSync.notify(messages.jekyllBuild);
-    return cp.spawn('jekyll', ['build'], {stdio: 'inherit'})
-        .on('close', done);
-});
+// Pre-JS Task
+gulp.task('pre-js', function() {
+  gulp.src('dev/js/bower/*.js')
+    .pipe(uglify())
+    .pipe(concat({ path: 'apps.js', stat: {mode: 0666} }))
+    .pipe(gulp.dest('dev/js'))
+})
 
-// Rebuild Jekyll & do page reload
-gulp.task('jekyll-rebuild', ['jekyll-build'], function () {
-    browserSync.reload();
-});
+// JS Task
+gulp.task('js', function() {
+  gulp.src('dev/js/*.js')
+    .pipe(uglify())
+    .pipe(concat({ path: 'functions.js', stat: {mode: 0666} }))
+    .pipe(gulp.dest('build/js'))
+})
 
-// Wait for jekyll-build, then launch the Server
-gulp.task('browser-sync', ['sass', 'jekyll-build'], function() {
-    browserSync({
-        server: {
-            baseDir: '_site'
-        }
-    });
-});
+// Sass Task
+gulp.task('sass', function() {
+  gulp.src('dev/sass/dustinharrell.styles.scss')
+    .pipe(sourcemaps.init())
+    .pipe(globbing({ extensions: ['.scss'] }))
+    .pipe(sass())
+    .pipe(autoprefixer())
+    .pipe(minifycss())
+    .pipe(sourcemaps.write('../maps/css'))
+    .pipe(gulp.dest('build/css'))
 
-// Compile files from _scss into both _site/css (for live injecting) and site (for future jekyll builds)
-gulp.task('sass', function () {
-    return gulp.src('_scss/main.scss')
-        .pipe(sass({
-            includePaths: ['scss'],
-            onError: browserSync.notify
-        }))
-        .pipe(prefix(['last 15 versions', '> 1%', 'ie 8', 'ie 7'], { cascade: true }))
-        .pipe(gulp.dest('_site/css'))
-        .pipe(browserSync.reload({stream:true}))
-        .pipe(gulp.dest('css'));
-});
+    // Reload browser
+    .pipe(reload({stream: true}))
+})
 
-// Watch scss files for changes & recompile
-// Watch html/md files, run jekyll & reload BrowserSync
-gulp.task('watch', function () {
-    gulp.watch('_scss/*.scss', ['sass']);
-    gulp.watch(['index.html', '_layouts/*.html', '_posts/*', 'about/*'], ['jekyll-rebuild']);
-});
+// Browser Sync
+gulp.task('browser-sync', function() {
+  browsersync({
+    server: {
+        baseDir: './'
+    },
+    port: 3000,
+    ui: {
+      port: 3001,
+      weinre: {
+        port: 3002
+      }
+    }
+  })
+})
 
-// Default task, running just `gulp` will compile the sass,
-// compile the jekyll site, launch BrowserSync & watch files.
-gulp.task('default', ['browser-sync', 'watch']);
+// Watch for changes
+gulp.task('watch', function(){
+  gulp.watch('dev/**/*', ['pre-js', 'js', 'sass'])
+  gulp.watch('*.html').on('change', browsersync.reload);
+})
+
+// Run run browser-sync and watch for changes
+gulp.task('default', ['browser-sync', 'watch'])

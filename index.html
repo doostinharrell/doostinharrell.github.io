@@ -1,13 +1,35 @@
----
-layout: default
-title: Your New Jekyll Site
----
-
-<div id="home">
-  <h1>Blog Posts</h1>
-  <ul class="posts">
-    {% for post in site.posts %}
-      <li><span>{{ post.date | date_to_string }}</span> &raquo; <a href="{{ post.url }}">{{ post.title }}</a></li>
-    {% endfor %}
-  </ul>
-</div>
+<!DOCTYPE html>
+<html>
+  <head>
+    <title></title>
+    <meta name="description" content="" />
+    <meta name="keywords" content="" />
+    <link type="text/css" rel="stylesheet" href="build/css/dustinharrell.styles.css" media="all" />    
+    <script src="build/js/functions.js"></script>
+  </head>
+  <body>
+    <div class="page">
+      <div class="header">
+        <div class="container">
+          <header></header>
+        </div>
+      </div>
+      <div class="content">
+        <div class="container">
+          <div class="left narrow">
+            <img src="images/dustin-harrell.jpg" />
+          </div>
+          <div class="right wide">
+            <h2>About</h2>
+            <p>My name is Dustin Harrell and I am a web designer and developer located in Asheville, NC.  I believe that the key to becoming a better designer and developer requires constant education, a solid work ethic, and a strong attention to detail.  I strive to remind myself of these fundamental’s daily.</p>
+          </div>
+        </div>
+      </div>
+      <div class="footer">
+        <div class="container">
+          <footer><i class="fa fa-linkedin fa-lg"></i><i class="fa fa-github fa-lg"></i><i class="fa fa-paper-plane fa-lg"></i></footer>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

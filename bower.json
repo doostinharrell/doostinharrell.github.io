@@ -2,7 +2,7 @@
   "name": "omega_4_gulp",
   "version": "4.7.11",
   "authors": [
-    "twmadmin <websites@thewiredmouse.com>"
+    "Dustin Harrell <doostinharrell@gmail.com>"
   ],
   "license": "MIT",
   "ignore": [
@@ -20,6 +20,7 @@
     "select2": "~4.0.0",
     "slick.js": "~1.5.5",
     "responsive-nav": "~1.0.39",
-    "scroll-reveal": "~2.3.0"
+    "scroll-reveal": "~2.3.0",
+    "fontawesome": "~4.3.0"
   }
 }

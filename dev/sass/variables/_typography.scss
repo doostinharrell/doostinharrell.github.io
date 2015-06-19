@@ -1,0 +1,58 @@
+@font-face {
+  font-family: 'oswaldmedium';
+  src: url('../../fonts/oswald-medium-webfont.eot');
+  src: url('../../fonts/oswald-medium-webfont.eot?#iefix') format('embedded-opentype'),
+       url('../../fonts/oswald-medium-webfont.woff2') format('woff2'),
+       url('../../fonts/oswald-medium-webfont.woff') format('woff'),
+       url('../../fonts/oswald-medium-webfont.ttf') format('truetype'),
+       url('../../fonts/oswald-medium-webfont.svg#oswaldmedium') format('svg');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'robotoregular';
+  src: url('../../fonts/roboto-regular-webfont.eot');
+  src: url('../../fonts/roboto-regular-webfont.eot?#iefix') format('embedded-opentype'),
+       url('../../fonts/roboto-regular-webfont.woff2') format('woff2'),
+       url('../../fonts/roboto-regular-webfont.woff') format('woff'),
+       url('../../fonts/roboto-regular-webfont.ttf') format('truetype'),
+       url('../../fonts/roboto-regular-webfont.svg#robotoregular') format('svg');
+  font-weight: normal;
+  font-style: normal;
+}
+
+html {
+  font-size: 175%;
+}
+
+$font-heading: 'oswaldmedium';
+$font-body: 'robotoregular';
+
+$xxl: 2.87;
+$xl: 1.999;
+$l: 1.414;
+$m: 1;
+$s: .707;
+
+body {
+  font-family: $font-body;
+}
+
+h1, h2, h3 {
+  font-family: $font-heading;
+  color: $grey;
+  font-weight: normal;
+}
+
+h1 {
+  @include font-size($xxl);
+}
+
+h2 {
+  @include font-size($xl);
+}
+
+h3 {
+  @include font-size($l);
+}

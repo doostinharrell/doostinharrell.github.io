@@ -6,7 +6,7 @@
 // Default Styles
 
 html {
-  background: white;
+  background: $green;
 }
 
 body {
@@ -28,16 +28,13 @@ a, a:link, a:visited {
 }
 
 .page {
-  border-top: 1em solid $green;
-  border-bottom: 1em solid $green;
+  background: white;
+  border: 1em solid $green;
 }
 
 .container {
   background: #fff;
   padding: 1em;
-  .inner {
-    margin: 0 .5em;
-  }
 }
 
 .footer {
@@ -52,6 +49,9 @@ a, a:link, a:visited {
   .container {
     .left {
       float: left;
+      &.narrow .inner {
+        margin-right: 1em;
+      }
     }
     .right {
       float: right;

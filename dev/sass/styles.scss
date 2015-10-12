@@ -28,8 +28,9 @@ a, a:link, a:visited {
 }
 
 .page {
+  border-top: .25em solid $green;
+  border-bottom: .25em solid $green;
   background: white;
-  border: 1em solid $green;
 }
 
 .container {
@@ -46,6 +47,10 @@ a, a:link, a:visited {
 }
 
 @media screen and (min-width: 420px) {
+  .page {
+    border: 1em solid $green;
+  }
+
   .container {
     .left {
       float: left;

@@ -1,0 +1,66 @@
+@import "normalize/*";
+@import "mixins/*";
+@import "variables/*";
+
+
+// Default Styles
+
+html {
+  background: white;
+}
+
+body {
+  color: $grey-light;
+}
+
+h2 {
+  margin: 0 0 .5em 0;
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+}
+
+a, a:link, a:visited {
+  color: $grey-light;
+  text-decoration: none;
+}
+
+.page {
+  border-top: 1em solid $green;
+  border-bottom: 1em solid $green;
+}
+
+.container {
+  background: #fff;
+  padding: 1em;
+  .inner {
+    margin: 0 .5em;
+  }
+}
+
+.footer {
+  clear: both;
+  text-align: center;
+  i {
+    margin: .5em;
+  }
+}
+
+@media screen and (min-width: 420px) {
+  .container {
+    .left {
+      float: left;
+    }
+    .right {
+      float: right;
+    }
+    .narrow {
+      width: 25%;
+    }
+    .wide {
+      width: 75%;
+    }
+  }
+}
